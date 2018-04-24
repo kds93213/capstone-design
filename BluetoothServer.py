@@ -1,7 +1,7 @@
 # file: BluetoothServer.py
 # auth: mininerej <chocom@tonkotsu-ra.men>
 # TODO: desc: ~~~~~
-from bluetooth import *
+import bluetooth
 import logging
 import iwlist
 
@@ -15,18 +15,18 @@ CONNECT_WIFI = 2
 
 class BluetoothServer:
     def __init__(self):
-        self.server_sock = BluetoothSocket(RFCOMM)
-        self.server_sock.bind(("", PORT_ANY))
+        self.server_sock = bluetooth.BluetoothSocket(bluetooth.RFCOMM)
+        self.server_sock.bind(("", bluetooth.PORT_ANY))
         self.server_sock.listen(1)
 
         port = self.server_sock.getsockname()[1]
 
         uuid = "94f39d29-7d6d-437d-973b-fba39e49d4ee"
 
-        advertise_service(self.server_sock, "SampleServer",
+        bluetooth.advertise_service(self.server_sock, "SampleServer",
                           service_id=uuid,
-                          service_classes=[uuid, SERIAL_PORT_CLASS],
-                          profiles=[SERIAL_PORT_PROFILE],
+                          service_classes=[uuid, bluetooth.SERIAL_PORT_CLASS],
+                          profiles=[bluetooth.SERIAL_PORT_PROFILE]
                           #                   protocols = [ OBEX_UUID ]
                           )
 
