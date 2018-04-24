@@ -50,13 +50,13 @@ class BluetoothServer:
         if title == WIFI_STATUS:
             wifi_status_data = iwlist.check()
             self.server_sock.send(wifi_status_data)
-            logging.info("wifi connection status data was sent!")
+            print("wifi connection status data was sent!")
             self.server_sock.close()
 
         elif title == WIFI_LIST:
             scan_data = iwlist.scan()
             self.server_sock.send(scan_data)
-            logging.info("iwlist data was sent!")
+            print("iwlist data was sent!")
             self.server_sock.close()
 
         elif title == CONNECT_WIFI:
@@ -65,14 +65,14 @@ class BluetoothServer:
             result = iwlist.connect(SSID, PW)
             if len(result) == 0:
                 self.server_sock.send(0)
-                logging.info("wifi connected with SSID : ",SSID)
+                print("wifi connected with SSID : ",SSID)
                 self.server_sock.close()
 
             # TODO: if wifi connected start face recognition
             #  android should get face recognition state from server.
 
         else:
-            logging.info("Wrong request")
+            print("Wrong request")
             return
 
     def run(self):
@@ -93,16 +93,16 @@ class BluetoothServer:
         print("Server exit")
 
 if __name__ == "__main__":
-    BTctl = bluetoothctl.Bluetoothctl()
-    while(True):
-        BTctl.make_discoverable()
-        print("make discoverable")
-        sleep(500)
-        if len(BTctl.get_paired_devices()):
-            devices = BTctl.get_paired_devices()
-            result = BTctl.connect(BTctl.parse_device_info(devices)["mac_address"])
-            print(result)
-            break
+    # BTctl = bluetoothctl.Bluetoothctl()
+    # while(True):
+    #     BTctl.make_discoverable()
+    #     print("make discoverable")
+    #     sleep(500)
+    #     if len(BTctl.get_paired_devices()):
+    #         devices = BTctl.get_paired_devices()
+    #         result = BTctl.connect(BTctl.parse_device_info(devices)["mac_address"])
+    #         print(result)
+    #         break
     server = BluetoothServer()
-    logging.info("Server instance created!")
+    print("Server instance created!")
     server.run()
