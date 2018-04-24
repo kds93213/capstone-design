@@ -4,13 +4,20 @@
 from bluetooth import *
 import logging
 import iwlist
-
+import bluetoothctl
+from time import sleep
 
 logging.basicConfig(level=logging.DEBUG)
 
 WIFI_STATUS = 0
 WIFI_LIST = 1
 CONNECT_WIFI = 2
+
+# 0 WIFI STATUS ***
+WIFI_CONNECTED = 0
+WIFI_NOT_CONNECTED = 1
+
+
 
 
 class BluetoothServer:
@@ -86,6 +93,16 @@ class BluetoothServer:
         print("Server exit")
 
 if __name__ == "__main__":
+    BTctl = bluetoothctl.Bluetoothctl()
+    while(True):
+        BTctl.make_discoverable()
+        print("make discoverable")
+        sleep(500)
+        if len(BTctl.get_paired_devices()):
+            devices = BTctl.get_paired_devices()
+            result = BTctl.connect(BTctl.parse_device_info(devices)["mac_address"])
+            print(result)
+            break
     server = BluetoothServer()
     logging.info("Server instance created!")
     server.run()
