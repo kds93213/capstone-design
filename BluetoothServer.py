@@ -23,15 +23,15 @@ WIFI_NOT_CONNECTED = 1
 class BluetoothServer:
     def __init__(self):
         self.server_sock = BluetoothSocket(RFCOMM)
-        self.server_sock.bind(("", PORT_ANY))
+        self.server_sock.bind(("5C:70:A3:F4:44:6A", PORT_ANY))
         self.server_sock.listen(1)
 
         port = self.server_sock.getsockname()[1]
 
         uuid = "94f39d29-7d6d-437d-973b-fba39e49d4ee"
 
-        # advertise_service(self.server_sock, "SampleServer",
-        #                   service_id=uuid,
+        advertise_service(self.server_sock, "SampleServer",
+                          service_id=uuid)
         #                   # service_classes=[uuid, btcommon.SERIAL_PORT_CLASS],
         #                   # profiles=[btcommon.SERIAL_PORT_PROFILE]
         #                   #                   protocols = [ OBEX_UUID ]
