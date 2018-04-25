@@ -4,9 +4,9 @@ import logging as log
 import datetime as dt
 from time import sleep
 
-cascPath = "haarcascade_frontalface_default.xml"
+cascPath = "/home/pi/capstone-design/haarcascade_frontalface_default.xml"
 faceCascade = cv2.CascadeClassifier(cascPath)
-log.basicConfig(filename='webcam.q', level=log.INFO)
+log.basicConfig(filename='webcam.q',level=log.INFO)
 
 video_capture = cv2.VideoCapture(0)
 anterior = 0
@@ -17,46 +17,41 @@ time_consume = started_at
 
 while True:
     study_started = True
-    while video_capture.isOpened():
-
-        # if not video_capture.isOpened():
-
-        # Capture frame-by-frame
-        ret, frame = video_capture.read()
-
-        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-
-        faces = faceCascade.detectMultiScale(
-            gray,
-            scaleFactor=1.1,
-            minNeighbors=5,
-            minSize=(30, 30)
-        )
-
-        # Draw a rectangle around the faces
-        for (x, y, w, h) in faces:
-            cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
-
-        if anterior != len(faces):
-            anterior = len(faces)
-            log.info("faces: " + str(len(faces)) + " at " + str(dt.datetime.now()))
-
-        # Display the resulting frame
-        cv2.imshow('Video', frame)
-
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            study_started = False
-            break
-
-        # Display the resulting frame
-        cv2.imshow('Video', frame)
-
-    if not study_started:
-        break
-    else:
+    if not video_capture.isOpened():
         print('Unable to load camera.')
         sleep(5)
         pass
+
+    # Capture frame-by-frame
+    ret, frame = video_capture.read()
+
+    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+
+    faces = faceCascade.detectMultiScale(
+        gray,
+        scaleFactor=1.1,
+        minNeighbors=5,
+        minSize=(30, 30)
+    )
+
+    # Draw a rectangle around the faces
+    for (x, y, w, h) in faces:
+        cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
+
+    if anterior != len(faces):
+        anterior = len(faces)
+        log.info("faces: "+str(len(faces))+" at "+str(dt.datetime.now()))
+
+
+    # Display the resulting frame
+    cv2.imshow('Video', frame)
+
+
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
+
+    # Display the resulting frame
+    cv2.imshow('Video', frame)
 
 # When everything is done, release the capture
 video_capture.release()
@@ -64,6 +59,6 @@ cv2.destroyAllWindows()
 study_started = False
 ended_at = dt.datetime.now()
 
-print("study started\t: ", started_at.__str__)
-print("study ended\t: " + ended_at.__str__)
-print("study time\t: " + (ended_at - started_at).__str__)
+print("study started\t: ",started_at.__str__)
+print("study ended\t: "+ended_at.__str__)
+print("study time\t: "+ (ended_at-started_at).__str__)
