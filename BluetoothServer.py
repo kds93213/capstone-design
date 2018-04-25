@@ -4,6 +4,7 @@
 from bluetooth import *
 import logging
 import iwlist
+import subprocess
 import bluetoothctl
 from time import sleep
 
@@ -103,6 +104,10 @@ if __name__ == "__main__":
     #         result = BTctl.connect(BTctl.parse_device_info(devices)["mac_address"])
     #         print(result)
     #         break
+
+    cmd = ["sudo", "hciconfig", "hci0", "piscan"]
+    proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+
     server = BluetoothServer()
     print("Server instance created!")
     server.run()
