@@ -16,10 +16,9 @@ started_at = dt.datetime.utcnow()
 time_consume = started_at
 
 while True:
-    # study_started = True
+    study_started = True
     while video_capture.isOpened():
 
-        study_started = True
         # if not video_capture.isOpened():
 
         # Capture frame-by-frame
