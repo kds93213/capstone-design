@@ -73,7 +73,7 @@ class BluetoothServer:
             #  android should get face recognition state from server.
 
         else:
-            print("Wrong request")
+            print "Wrong request"
             return
 
     def run(self):
@@ -88,7 +88,7 @@ class BluetoothServer:
             print("KeyboardInterrupt", e.args);
 
 
-        print("disconnected")
+        print "disconnected"
         self.client_sock.close()
         self.server_sock.close()
         print("Server exit")
