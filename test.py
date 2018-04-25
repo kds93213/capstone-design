@@ -4,7 +4,7 @@ import logging as log
 import datetime as dt
 from time import sleep
 
-cascPath = "haarcascade_frontalface_default.xml"
+cascPath = "/home/pi/capstone-design/haarcascade_frontalface_default.xml"
 faceCascade = cv2.CascadeClassifier(cascPath)
 log.basicConfig(filename='webcam.q',level=log.INFO)
 
@@ -14,8 +14,6 @@ anterior = 0
 study_started = False
 started_at = dt.datetime.utcnow()
 time_consume = started_at
-
-
 
 while True:
     study_started = True
