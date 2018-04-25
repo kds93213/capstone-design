@@ -31,12 +31,12 @@ class BluetoothServer:
 
         uuid = "94f39d29-7d6d-437d-973b-fba39e49d4ee"
 
-        # advertise_service(self.server_sock, "SampleServer",
-        #                   service_id=uuid)
-        #                   # service_classes=[uuid, btcommon.SERIAL_PORT_CLASS],
-        #                   # profiles=[btcommon.SERIAL_PORT_PROFILE]
-        #                   #                   protocols = [ OBEX_UUID ]
-        #                   )
+        advertise_service(self.server_sock, "SampleServer",
+                          service_id=uuid,
+                          service_classes=[uuid, SERIAL_PORT_CLASS],
+                          profiles=[SERIAL_PORT_PROFILE]
+                          #                   protocols = [ OBEX_UUID ]
+                          )
 
         print("Waiting for connection on RFCOMM channel %d" % port)
 

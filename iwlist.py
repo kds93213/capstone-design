@@ -18,11 +18,13 @@ regexps = [
 # Must run as super user.
 # Does not specify a particular device, so will scan all network devices.
 
+
 def connect(SSID, PW="", interface="wlan0"):
     cmd = ["wpa_passphrase ", SSID, PW]
     proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     points = proc.stdout.read().decode('utf-8')
     return points
+
 
 def check(interface="wlan0"):
     cmd = ["iwgetid ", interface]
@@ -30,14 +32,16 @@ def check(interface="wlan0"):
     points = proc.stdout.read().decode('utf-8')
     return points
 
+
 def scan(interface='wlan0'):
     cmd = ["iwlist", interface, "scan"]
     proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     points = proc.stdout.read().decode('utf-8')
     return points
 
-# Parses the response from the command "iwlist scan"
+
 def parse(content):
+    # Parses the response from the command "iwlist scan"
     cells = []
     lines = content.split('\n')
     for line in lines:
